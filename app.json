@@ -26,9 +26,6 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.chrisspecs.flip"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
   }
 }

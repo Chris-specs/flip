@@ -1,9 +1,9 @@
 // Common
-import React from 'react'
+import React, { useState } from 'react'
 import {
     StyleSheet,
     Text,
-    ScrollView,
+    View
 } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 // Hooks
@@ -13,6 +13,8 @@ import Banner from '@components/Banner'
 import AnimeList from '@components/AnimeList'
 // Utils
 import { seasonInfo } from '@utils'
+// Layout
+import MainLayout from '@layouts/Main'
 
 const Home = () => {
     const { getAllAnimesReq } = useAnime()
@@ -27,18 +29,20 @@ const Home = () => {
     const popular = data?.data?.data?.popular?.media
 
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            <StatusBar style='light' />
-            <Banner loading={ loading } element={trend} />
-            <Text style={styles.sectionTitle}>Trending</Text>
-            <AnimeList loading={ loading } data={trending && trending.slice(1)} />
-            <Text style={styles.sectionTitle}><Text style={styles.season}>{current()}</Text> season</Text>
-            <AnimeList loading={ loading } data={season} />
-            <Text style={styles.sectionTitle}>Next season</Text>
-            <AnimeList loading={ loading } data={nextSeason} />
-            <Text style={styles.sectionTitle}>All time popular</Text>
-            <AnimeList loading={ loading } data={popular} />
-        </ScrollView>
+        <MainLayout>
+            <View style={styles.container}>
+                <StatusBar style='light' />
+                <Banner loading={ loading } element={trend} />
+                <Text style={styles.sectionTitle}>Trending</Text>
+                <AnimeList loading={ loading } data={trending && trending.slice(1)} />
+                <Text style={styles.sectionTitle}><Text style={styles.season}>{current()}</Text> season</Text>
+                <AnimeList loading={ loading } data={season} />
+                <Text style={styles.sectionTitle}>Next season</Text>
+                <AnimeList loading={ loading } data={nextSeason} />
+                <Text style={styles.sectionTitle}>All time popular</Text>
+                <AnimeList loading={ loading } data={popular} />
+            </View>
+        </MainLayout>
     )
 }
 

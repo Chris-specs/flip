@@ -6,8 +6,7 @@ import {
     View,
     Image,
     Pressable,
-    useWindowDimensions,
-    ScrollView
+    useWindowDimensions
 } from 'react-native'
 // Components
 import Divider from '@components/shared/Divider'
@@ -15,6 +14,8 @@ import Divider from '@components/shared/Divider'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons'
 import RenderHtml from 'react-native-render-html'
+// Layout
+import MainLayout from '@layouts/Main'
 
 
 const Anime = ({ route, navigation }) => {
@@ -45,81 +46,83 @@ const Anime = ({ route, navigation }) => {
     }
 
     return (
-        <View style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-                <View style={[{ height: height * 0.6 }, styles.banner]}>
-                    <LinearGradient
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 0, y: 1 }}
-                        colors={['#000000cc', 'transparent']}
-                        style={styles.gradientTop}
-                    />
-                    <LinearGradient
-                        start={{ x: 0, y: 1 }}
-                        end={{ x: 0, y: 0 }}
-                        colors={['#000000', 'transparent']}
-                        style={styles.gradient}
-                    />
-                    <Image
-                        source={{ uri: element?.coverImage?.extraLarge }}
-                        style={styles.image}
-                    />
-                    <View style={styles.containerInfo}>
-                        <Text style={styles.title}>{element?.title?.english}</Text>
-                        <View style={styles.genres}>
-                            {element?.genres?.map((genre, i) => (
-                                <View key={i} style={styles.containerGenre}>
-                                    {i > 0 ? (
-                                        <Divider
-                                            color={element?.coverImage?.color}
-                                        />
-                                    ) : null}
-                                    <Text style={styles.genre}>{genre}</Text>
-                                </View>
-                            ))}
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.containerDescription}>
-                    <View style={styles.conatainerAnotherInfo}>
-                        <View style={styles.containerYear}>
-                            <Text style={styles.year}>{ element?.seasonYear }</Text>
-                            <Text style={styles.episodes}>{ element?.episodes ?? 'Unknown' } episodes</Text>
-                        </View>
-                        <View style={styles.containerScore}>
-                            <View>{ getScoreIcon(element?.averageScore) }</View><Text style={styles.score}>{ element?.averageScore ?? '' }%</Text>
-                        </View>
-                    </View>
-                    <View style={styles.conatainerStudios}>
-                        {
-                            element?.studios?.edges?.map((studio, i) => (
-                                <Text key={i} style={[{ color: element?.coverImage?.color }, styles.studio]}>{ studio?.node?.name }</Text>
-                            ))
-                        }
-                    </View>
-                    <RenderHtml
-                        contentWidth={width}
-                        source={html}
-                    />
-                    <View style={styles.containerAuthor}>
-                        <Image source={{ uri: element?.staff?.edges[0]?.node?.image?.large}} style={styles.authorImage} />
-                        <View style={styles.containerAuthorInfo}>
-                            <View>
-                                <Text style={styles.authorName}>{element?.staff?.edges[0]?.node?.name?.full}</Text>
-                                <Text style={styles.authorOccupation}>{element?.staff?.edges[0]?.node?.primaryOccupations[0]}</Text>
+        <MainLayout>
+            <View style={styles.container}>
+                <View style={styles.scrollView}>
+                    <View style={[{ height: height * 0.6 }, styles.banner]}>
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 0, y: 1 }}
+                            colors={['#000000cc', 'transparent']}
+                            style={styles.gradientTop}
+                        />
+                        <LinearGradient
+                            start={{ x: 0, y: 1 }}
+                            end={{ x: 0, y: 0 }}
+                            colors={['#000000', 'transparent']}
+                            style={styles.gradient}
+                        />
+                        <Image
+                            source={{ uri: element?.coverImage?.extraLarge }}
+                            style={styles.image}
+                        />
+                        <View style={styles.containerInfo}>
+                            <Text style={styles.title}>{element?.title?.english}</Text>
+                            <View style={styles.genres}>
+                                {element?.genres?.map((genre, i) => (
+                                    <View key={i} style={styles.containerGenre}>
+                                        {i > 0 ? (
+                                            <Divider
+                                                color={element?.coverImage?.color}
+                                            />
+                                        ) : null}
+                                        <Text style={styles.genre}>{genre}</Text>
+                                    </View>
+                                ))}
                             </View>
-                            <Text style={styles.authorLabel}>{element?.staff?.edges[0]?.role}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.containerDescription}>
+                        <View style={styles.conatainerAnotherInfo}>
+                            <View style={styles.containerYear}>
+                                <Text style={styles.year}>{ element?.seasonYear }</Text>
+                                <Text style={styles.episodes}>{ element?.episodes ?? 'Unknown' } episodes</Text>
+                            </View>
+                            <View style={styles.containerScore}>
+                                <View>{ getScoreIcon(element?.averageScore) }</View><Text style={styles.score}>{ element?.averageScore ?? '' }%</Text>
+                            </View>
+                        </View>
+                        <View style={styles.conatainerStudios}>
+                            {
+                                element?.studios?.edges?.map((studio, i) => (
+                                    <Text key={i} style={[{ color: element?.coverImage?.color }, styles.studio]}>{ studio?.node?.name }</Text>
+                                ))
+                            }
+                        </View>
+                        <RenderHtml
+                            contentWidth={width}
+                            source={html}
+                        />
+                        <View style={styles.containerAuthor}>
+                            <Image source={{ uri: element?.staff?.edges[0]?.node?.image?.large}} style={styles.authorImage} />
+                            <View style={styles.containerAuthorInfo}>
+                                <View>
+                                    <Text style={styles.authorName}>{element?.staff?.edges[0]?.node?.name?.full}</Text>
+                                    <Text style={styles.authorOccupation}>{element?.staff?.edges[0]?.node?.primaryOccupations[0]}</Text>
+                                </View>
+                                <Text style={styles.authorLabel}>{element?.staff?.edges[0]?.role}</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
-            </ScrollView>
-            <View style={styles.containerButton}>
-                <Pressable style={styles.playButton} onPress={handlePress}>
-                    <Ionicons name='play' size={18} style={styles.icon} />
-                    <Text style={styles.textButton}>Play trailer</Text>
-                </Pressable>
+                <View style={styles.containerButton}>
+                    <Pressable style={styles.playButton} onPress={handlePress}>
+                        <Ionicons name='play' size={18} style={styles.icon} />
+                        <Text style={styles.textButton}>Play trailer</Text>
+                    </Pressable>
+                </View>
             </View>
-        </View>
+        </MainLayout>
     )
 }
 
