@@ -29,15 +29,15 @@ const Home = () => {
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <StatusBar style='light' />
-            <Banner element={trend} />
+            <Banner loading={ loading } element={trend} />
             <Text style={styles.sectionTitle}>Trending</Text>
-            <AnimeList data={trending && trending.slice(1)} />
+            <AnimeList loading={ loading } data={trending && trending.slice(1)} />
             <Text style={styles.sectionTitle}><Text style={styles.season}>{current()}</Text> season</Text>
-            <AnimeList data={season} />
+            <AnimeList loading={ loading } data={season} />
             <Text style={styles.sectionTitle}>Next season</Text>
-            <AnimeList data={nextSeason} />
+            <AnimeList loading={ loading } data={nextSeason} />
             <Text style={styles.sectionTitle}>All time popular</Text>
-            <AnimeList data={popular} />
+            <AnimeList loading={ loading } data={popular} />
         </ScrollView>
     )
 }

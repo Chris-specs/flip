@@ -5,11 +5,12 @@ import { StyleSheet, Text, View, Image, Pressable, useWindowDimensions } from 'r
 import { useNavigation } from '@react-navigation/native'
 // Components
 import Divider from './shared/Divider';
+import Loader from './shared/Loader';
 // Other
 import { LinearGradient } from 'expo-linear-gradient'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
-const Banner = ({ element }) => {
+const Banner = ({ element, loading }) => {
     const navigation = useNavigation()
     const { height } = useWindowDimensions()
 
@@ -21,32 +22,40 @@ const Banner = ({ element }) => {
     }
 
     return (
-        <Pressable onPress={handlePressAnime} style={[{ height: height * 0.6 }, styles.container]}>
-            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} colors={['#000000cc', 'transparent']} style={styles.gradientTop} />
-            <LinearGradient start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }} colors={['#000000', 'transparent']} style={styles.gradient} />
-                <Image source={{ uri: element?.coverImage?.extraLarge}} style={styles.image} />
-            <View style={styles.containerInfo}>
-                <Text style={styles.title}>{element?.title?.english}</Text>
-                <View style={styles.genres}>
-                    {
-                        element?.genres?.map((genre, i) => (
-                            <View key={i} style={styles.containerGenre}>
+        <>
+            {
+                loading ? (
+                    <Loader width='100%' height={ height * 0.6 } />
+                ) : (
+                    <Pressable onPress={handlePressAnime} style={[{ height: height * 0.6 }, styles.container]}>
+                        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} colors={['#000000cc', 'transparent']} style={styles.gradientTop} />
+                        <LinearGradient start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }} colors={['#000000', 'transparent']} style={styles.gradient} />
+                            <Image source={{ uri: element?.coverImage?.extraLarge}} style={styles.image} />
+                        <View style={styles.containerInfo}>
+                            <Text style={styles.title}>{element?.title?.english}</Text>
+                            <View style={styles.genres}>
                                 {
-                                    i > 0
-                                    ? <Divider color={element?.coverImage?.color} />
-                                    : null
+                                    element?.genres?.map((genre, i) => (
+                                        <View key={i} style={styles.containerGenre}>
+                                            {
+                                                i > 0
+                                                ? <Divider color={element?.coverImage?.color} />
+                                                : null
+                                            }
+                                            <Text style={styles.genre}>{genre}</Text>
+                                        </View>
+                                    ))
                                 }
-                                <Text style={styles.genre}>{genre}</Text>
                             </View>
-                        ))
-                    }
-                </View>
-                <Pressable style={styles.playButton} onPress={handlePress}>
-                    <Ionicons name='play'size={18} style={styles.icon}/>
-                    <Text style={styles.textButton}>Play trailer</Text>
-                </Pressable>
-            </View>
-        </Pressable>
+                            <Pressable style={styles.playButton} onPress={handlePress}>
+                                <Ionicons name='play'size={18} style={styles.icon}/>
+                                <Text style={styles.textButton}>Play trailer</Text>
+                            </Pressable>
+                        </View>
+                    </Pressable>
+                )
+            }
+        </>
   )
 }
 
