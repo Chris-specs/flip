@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import {
     StyleSheet,
     View,
-    useWindowDimensions,
     Pressable,
     Text,
 } from 'react-native'
@@ -65,7 +64,6 @@ const Trailer = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        minHeight: '100%',
         backgroundColor: '#000',
         justifyContent: 'center'
     },
@@ -79,6 +77,7 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         backgroundColor: '#000'
+
     },
     lottie: {
         width: 200,

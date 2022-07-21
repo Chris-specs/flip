@@ -1,12 +1,13 @@
 // Common
-import React from 'react'
+import React, { useState } from 'react'
 import {
     StyleSheet,
     Text,
     View,
     Image,
     Pressable,
-    useWindowDimensions
+    useWindowDimensions,
+    ScrollView
 } from 'react-native'
 // Components
 import Divider from '@components/shared/Divider'
@@ -45,10 +46,20 @@ const Anime = ({ route, navigation }) => {
         }
     }
 
+    const [scroll, setScroll] = useState(false)
+
+    const handleScroll = (scrolled) => {
+        if (scrolled >= 50) {
+            setScroll(true)
+        } else {
+            setScroll(false)
+        }
+    }
+
     return (
-        <MainLayout>
+        <MainLayout scrolled={scroll} >
             <View style={styles.container}>
-                <View style={styles.scrollView}>
+                <ScrollView style={styles.scrollView} onScroll={(e) => handleScroll(e.nativeEvent.contentOffset.y)} showsVerticalScrollIndicator={false} >
                     <View style={[{ height: height * 0.6 }, styles.banner]}>
                         <LinearGradient
                             start={{ x: 0, y: 0 }}
@@ -114,7 +125,7 @@ const Anime = ({ route, navigation }) => {
                             </View>
                         </View>
                     </View>
-                </View>
+                </ScrollView>
                 <View style={styles.containerButton}>
                     <Pressable style={styles.playButton} onPress={handlePress}>
                         <Ionicons name='play' size={18} style={styles.icon} />

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import {
     StyleSheet,
     Text,
-    View
+    ScrollView,
 } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 // Hooks
@@ -28,9 +28,19 @@ const Home = () => {
     const nextSeason = data?.data?.data?.nextSeason?.media
     const popular = data?.data?.data?.popular?.media
 
+    const [scroll, setScroll] = useState(false)
+
+    const handleScroll = (scrolled) => {
+        if (scrolled >= 50) {
+            setScroll(true)
+        } else {
+            setScroll(false)
+        }
+    }
+
     return (
-        <MainLayout>
-            <View style={styles.container}>
+        <MainLayout scrolled={scroll}>
+            <ScrollView style={styles.container} onScroll={(e) => handleScroll(e.nativeEvent.contentOffset.y)} showsVerticalScrollIndicator={false}>
                 <StatusBar style='light' />
                 <Banner loading={ loading } element={trend} />
                 <Text style={styles.sectionTitle}>Trending</Text>
@@ -41,7 +51,7 @@ const Home = () => {
                 <AnimeList loading={ loading } data={nextSeason} />
                 <Text style={styles.sectionTitle}>All time popular</Text>
                 <AnimeList loading={ loading } data={popular} />
-            </View>
+            </ScrollView>
         </MainLayout>
     )
 }
